@@ -1,5 +1,7 @@
 <?php
 
+namespace LabQueue;
+
 /**
  * Class Person
  */
@@ -8,6 +10,14 @@ class Person
 	private $name;
 	private $queue_position;
 
+    /**
+     * Person constructor.
+     * @param $name
+     */
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
 
 
     /**
