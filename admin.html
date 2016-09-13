@@ -2,21 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Lab Queue Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style>
+        #logged-in, #logged-out{
+            width: 310px;
+            height: 100px;
+            display: block;
+            margin: 100px auto;
+        }
+        .list-group-item {
+            display: list-item;
+        }
+    </style>
 </head>
 <body>
 
 <div id="logged-in" style="display: none">
-    <ol id="queue"></ol>
-    <button id="next">Neste</button>
+    <h2 style="text-align: center">Lab Queue</h2>
+    <ol id="queue" class="list-group"></ol>
+    <button id="next" class="btn btn-primary btn-block">Next</button>
 </div>
 <div id="logged-out" style="display: none">
+    <h2 style="text-align: center">Admin</h2>
     <form method="POST" action="login.php" id="login-form">
-        <label>
-            Passord:
-            <input id="pw-input" type="password" name="password">
-        </label>
-        <button type="submit">Logg inn</button>
+        <label for="pw-input" class="sr-only">Passord</label>
+            <input class="form-control" id="pw-input" type="password" placeholder="Password" name="password">
+        <br>
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
     </form>
 </div>
 
@@ -103,7 +117,7 @@
         queueEl.empty();
         for( i = 0; i < queue.length; i++){
             person = queue[i];
-            queueEl.append('<li>'+person+'</li>');
+            queueEl.append('<li class="list-group-item">'+person+'</li>');
         }
     }
     $('#next').click(function(){

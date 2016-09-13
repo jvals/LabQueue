@@ -2,27 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Labkø</title>
+    <title>Lab Queue</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style>
+        h1{
+            text-align: center;
+        }
+        #signup{
+            width: 300px;
+            height: 100px;
+            display: block;
+            margin: 100px auto;
+        }
+        #queue{
+            text-align: center;
+            width: 310px;
+            height: 100px;
+            display: block;
+            margin: 100px auto;
+        }
+        #position{
+            font-size: 50px;
+        }
+    </style>
 </head>
 
 <body>
+<div class="container">
 
-<div id="signup" style="display: none">
-    <h1>Labkø</h1>
-    <form id="signup-form" action="AddQueue.php" method="post">
-        <label for="name">Navn</label>
-        <input id="name" type="text" name="name">
-        <button type="submit">Legg til</button>
-    </form>
-</div>
-<div id="queue" style="display: none">
-    <div>
-        Din posisjon i køen er: <span id="position"></span>
+    <div id="signup" style="display: none">
+        <h1>Lab queue</h1>
+        <form id="signup-form" action="AddQueue.php" method="post">
+            <label for="name" class="sr-only">Name</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="Name" id="name" type="text" name="name" required>
+                <span class="input-group-btn">
+                    <button class="btn btn-md btn-primary" type="submit">Register</button>
+                </span>
+            </div>
+        </form>
     </div>
-    <div>
-        <button id="signdown">Meld av</button>
+
+    <div id="queue" style="display: none">
+        <div>
+            <h2>Your position in queue:</h2>
+            <span id="position" class="text-primary"></span>
+        </div>
+        <br><br>
+        <div>
+            <button class="btn btn-danger" id="signdown">Unregister</button>
+        </div>
     </div>
-</div>
+
+</div> <!-- /container -->
+
+
 
 <script
         src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -40,7 +76,10 @@
     function renderPosition(position) {
         if(position >= 0){
             if(position == 0){
-                position = 'Din tur!';
+                position = 'Your turn!';
+                $('#position').removeClass('text-primary').addClass('text-success');
+            }else{
+                $('#position').removeClass('text-success').addClass('text-primary');
             }
             $('#position').html(position);
             $('#signup').hide();
@@ -66,7 +105,7 @@
 
     $('#signdown').click(function(){
         $.post( "RemovePerson.php", function() {
-            getQueue();
+            getPosition();
         });
     })
 
