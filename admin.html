@@ -34,8 +34,8 @@
         }
     }
     $('#next').click(function(){
-        $.post( "RemoveNext.php", function( data ) {
-            console.log(data)
+        $.post( "RemoveNext.php", function() {
+            getQueue();
         });
     })
 </script>

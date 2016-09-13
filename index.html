@@ -16,7 +16,12 @@
     </form>
 </div>
 <div id="queue" style="display: none">
-    Din posisjon i køen er: <span id="position"></span>
+    <div>
+        Din posisjon i køen er: <span id="position"></span>
+    </div>
+    <div>
+        <button id="signdown">Meld av</button>
+    </div>
 </div>
 
 
@@ -53,6 +58,12 @@
     }
     getPosition();
     setInterval(getPosition, 1000)
+
+    $('#signdown').click(function(){
+        $.post( "RemovePerson.php", function() {
+            getQueue();
+        });
+    })
 
 </script>
 

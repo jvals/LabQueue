@@ -24,6 +24,7 @@ if(isset($name) && strlen($name) > 0){
         $queue = unserialize($file_contents);
     }
 
+    // Don't add person if session id is already in list
     if(!key_exists($id, $queue)){
         $queue[$id] = $name;
         file_put_contents("Queue.txt", serialize($queue));

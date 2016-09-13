@@ -8,8 +8,9 @@
 
 session_start();
 $id = session_id();
-
-$file_content = file_get_contents("Queue.txt");
-$queue = unserialize($file_content);
-array_shift($queue);
-file_put_contents("Queue.txt", serialize($queue));
+if(file_exists("Queue.txt")){
+    $file_content = file_get_contents("Queue.txt");
+    $queue = unserialize($file_content);
+    array_shift($queue);
+    file_put_contents("Queue.txt", serialize($queue));
+}

@@ -6,9 +6,10 @@
  * Time: 17.28
  */
 
-session_start();
-$id = session_id();
-
-$file_content = file_get_contents("Queue.txt");
-$queue = unserialize($file_content);
-echo json_encode(array_values($queue));
+if(file_exists("Queue.txt")){
+    $file_content = file_get_contents("Queue.txt");
+    $queue = unserialize($file_content);
+    echo json_encode(array_values($queue));
+}else{
+    echo json_encode([]);
+}
