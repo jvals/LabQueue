@@ -6,13 +6,14 @@
  * Time: 17.28
  */
 require_once 'Password.php';
+session_start();
+$id = session_id();
 
 $isAdmin = isset($_COOKIE['pw']) && $_COOKIE['pw'] = $PASSWORD;
 
 if(file_exists("Queue.txt") && $isAdmin){
     $file_content = file_get_contents("Queue.txt");
     $queue = unserialize($file_content);
-    echo json_encode(array_values($queue));
-}else{
-    echo json_encode([]);
+    array_shift($queue);
+    file_put_contents("Queue.txt", serialize($queue));
 }

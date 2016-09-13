@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="logged-in" style="display: none">
+    <ol id="queue"></ol>
+    <button id="next">Neste</button>
+</div>
+<div id="logged-out" style="display: none">
+    <form method="POST" action="login.php" id="login-form">
+        <label>
+            Passord:
+            <input id="pw-input" type="password" name="password">
+        </label>
+        <button type="submit">Logg inn</button>
+    </form>
+</div>
+
+<script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous">
+</script>
+
+<script>
+
+    function authenticate(){
+        pw = getCookie('pw');
+        if(pw.length > 0){
+            $.ajax({
+                type: "POST",
+                url: 'login.php',
+                data: {'password': pw},
+                success: function(data)
+                {
+                    if(JSON.parse(data)){
+                        logIn();
+                    }else{
+                        logOut()
+                    }
+                }
+            });
+        }else{
+            logOut();
+        }
+    }
+    authenticate();
+
+    function logIn(){
+        $('#logged-in').show();
+        $('#logged-out').hide();
+    }
+
+    function logOut(){
+        $('#logged-in').hide();
+        $('#logged-out').show();
+    }
+
+    $('#login-form').submit(function(event){
+        event.preventDefault();
+        var pw = $('#pw-input').val();
+        setCookie('pw', pw, 30);
+        authenticate();
+    });
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length,c.length);
+            }
+        }
+        return "";
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+    function getQueue() {
+        $.get("GetQueue.php", function( data ) {
+            renderQueue(JSON.parse(data));
+        })
+    }
+
+    getQueue();
+    setInterval(getQueue, 1000);
+
+    function renderQueue(queue){
+        queueEl = $('#queue');
+        queueEl.empty();
+        for( i = 0; i < queue.length; i++){
+            person = queue[i];
+            queueEl.append('<li>'+person+'</li>');
+        }
+    }
+    $('#next').click(function(){
+        $.post( "RemoveNext.php", function() {
+            getQueue();
+        });
+    })
+</script>
+</body>
+</html>
