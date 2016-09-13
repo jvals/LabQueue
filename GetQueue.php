@@ -19,5 +19,5 @@ $file_content = file_get_contents("Queue.txt");
 $queue = unserialize($file_content);
 echo "Du er nr: ";
 //$user = $queue->
-echo json_encode($queue->getPosition($user));
+echo json_encode($queue->getPosition($queue->getCurrentUser()));
 echo " I køen";

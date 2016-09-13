@@ -85,6 +85,37 @@ class Queue
         return array_search($person, $this->persons);
     }
 
+    /**
+     * @return null
+     */
+    public function getTopPerson()
+    {
+        return $this->top_person;
+    }
+
+    /**
+     * @param null $top_person
+     */
+    public function setTopPerson($top_person)
+    {
+        $this->top_person = $top_person;
+    }
+
+    /**
+     * @return null
+     */
+    public function getCurrentUser()
+    {
+        return $this->current_user;
+    }
+
+    /**
+     * @param null $current_user
+     */
+    public function setCurrentUser($current_user)
+    {
+        $this->current_user = $current_user;
+    }
 
 
 }

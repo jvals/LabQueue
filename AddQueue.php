@@ -26,4 +26,5 @@ if (!file_exists("Queue.txt")) {
 
 $user = new Person($_POST["name"]);
 $queue->addPerson($user);
+$queue->setCurrentUser($user);
 file_put_contents("Queue.txt", serialize($queue));
