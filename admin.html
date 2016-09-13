@@ -34,7 +34,7 @@
             $.ajax({
                 type: "POST",
                 url: 'login.php',
-                data: {'password': pw}, // serializes the form's elements.
+                data: {'password': pw},
                 success: function(data)
                 {
                     if(JSON.parse(data)){

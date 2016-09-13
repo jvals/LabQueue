@@ -9,9 +9,9 @@
 
 <div id="signup" style="display: none">
     <h1>Labkø</h1>
-    <form action="AddQueue.php" method="post" target="dummyframe">
+    <form id="signup-form" action="AddQueue.php" method="post">
         <label for="name">Navn</label>
-        <input type="text" name="name">
+        <input id="name" type="text" name="name">
         <button type="submit">Legg til</button>
     </form>
 </div>
@@ -22,12 +22,6 @@
     <div>
         <button id="signdown">Meld av</button>
     </div>
-</div>
-
-
-<div style="display: none">
-    <!-- Used to avoid redirect after submitting form -->
-    <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
 </div>
 
 <script
@@ -57,7 +51,18 @@
         }
     }
     getPosition();
-    setInterval(getPosition, 1000)
+    setInterval(getPosition, 1000);
+
+    $('#signup-form').submit(function(event){
+        event.preventDefault();
+        var name = $('#name').val();
+        $.ajax({
+            type: "POST",
+            url: 'AddQueue.php',
+            data: {'name': name},
+            success: function(data){}
+        });
+    });
 
     $('#signdown').click(function(){
         $.post( "RemovePerson.php", function() {
