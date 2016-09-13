@@ -14,6 +14,7 @@ Admin: ```localhost:8000/admin.html```
 
 ```
 heroku create app_name
+heroku buildpacks:set heroku/php
 git push heroku master
 heroku open
 ```
