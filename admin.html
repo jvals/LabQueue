@@ -30,7 +30,6 @@
 
     function authenticate(){
         pw = getCookie('pw');
-        console.log(pw);
         if(pw.length > 0){
             $.ajax({
                 type: "POST",
@@ -62,23 +61,10 @@
     }
 
     $('#login-form').submit(function(event){
-       event.preventDefault();
+        event.preventDefault();
         var pw = $('#pw-input').val();
-        console.log(pw);
-        $.ajax({
-            type: "POST",
-            url: 'login.php',
-            data: $("#login-form").serialize(), // serializes the form's elements.
-            success: function(data)
-            {
-                if(JSON.parse(data)){
-                    console.log("Setting cookie");
-                    setCookie('pw', pw, 30);
-                    logIn();
-                }
-            }
-        });
-
+        setCookie('pw', pw, 30);
+        authenticate();
     });
 
     function getCookie(cname) {
