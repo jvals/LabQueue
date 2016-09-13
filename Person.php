@@ -9,6 +9,9 @@ class Person
 {
 	private $name;
 	private $queue_position;
+    private $session_id;
+
+
 
     /**
      * Person constructor.
@@ -17,6 +20,7 @@ class Person
     public function __construct($name)
     {
         $this->name = $name;
+        $this->session_id = date_timestamp_get();
     }
 
 
@@ -50,6 +54,14 @@ class Person
     public function setQueuePosition($queue_position)
     {
         $this->queue_position = $queue_position;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSessionId()
+    {
+        return $this->session_id;
     }
 
 

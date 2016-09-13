@@ -10,15 +10,8 @@ use LabQueue\Person;
 class Queue
 {
     private $persons;
-
-    /**
-     * @return array
-     */
-    public function getPersons()
-    {
-        return $this->persons;
-    }
-    private $current_person;
+    private $top_person;
+    private $current_user;
 
     /**
      * Queue constructor.
@@ -26,7 +19,8 @@ class Queue
     public function __construct()
     {
         $this->persons = array();
-        $this->current_person = null;
+        $this->top_person = null;
+        $this->current_user = null;
     }
 
     /**
@@ -37,9 +31,9 @@ class Queue
     public function addPerson(Person $person)
     {
         $this->persons[] = $person;
-        if ($this->current_person === null or $this->persons.count() === 1)
+        if ($this->top_person === null or $this->persons.count() === 1)
         {
-            $this->current_person = $person;
+            $this->top_person = $person;
         }
     }
 
@@ -60,7 +54,7 @@ class Queue
 
 
     /**
-     * Remove the person in the front of the queue, and update current_person to reflect the front.
+     * Remove the person in the front of the queue, and update top_person to reflect the front.
      *
      */
     public function advance()
@@ -68,9 +62,27 @@ class Queue
 
     }
 
+    /**
+     * @return array
+     */
+    public function getPersons()
+    {
+        return $this->persons;
+    }
+
+    public function setPersons($persons)
+    {
+        $this->persons = $persons;
+    }
+
     public function length()
     {
         return count($this->persons);
+    }
+
+    public function getPosition($person)
+    {
+        return array_search($person, $this->persons);
     }
 
 

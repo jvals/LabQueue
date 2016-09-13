@@ -23,5 +23,7 @@ if (!file_exists("Queue.txt")) {
     $file_contents = file_get_contents("Queue.txt");
     $queue = unserialize($file_contents);
 }
-$queue->addPerson(new Person($_POST["name"]));
+
+$user = new Person($_POST["name"]);
+$queue->addPerson($user);
 file_put_contents("Queue.txt", serialize($queue));
