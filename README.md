@@ -1,6 +1,10 @@
 # LabQueue
 A web app for maintaining a queue system on the lab.
 
+Try it out:
+
+https://labqueue2016.herokuapp.com/
+
 #### Run locally
 ```
 php -S localhost:8000
