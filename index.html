@@ -7,12 +7,23 @@
 
 <body>
 
-<h1>Labkø</h1>
-<form action="AddQueue.php" method="post">
-    <label for="name">Navn</label>
-    <input type="text" name="name">
-    <button type="submit">Legg til</button>
-</form>
+<div id="signup" style="display: none">
+    <h1>Labkø</h1>
+    <form action="AddQueue.php" method="post" target="dummyframe">
+        <label for="name">Navn</label>
+        <input type="text" name="name">
+        <button type="submit">Legg til</button>
+    </form>
+</div>
+<div id="queue" style="display: none">
+    Din posisjon i køen er: <span id="position"></span>
+</div>
+
+
+<div style="display: none">
+    <!-- Used to avoid redirect after submitting form -->
+    <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
+</div>
 
 <script
         src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -21,18 +32,27 @@
 </script>
 
 <script>
-    function getQueue() {
-        $.get("GetQueue.php", function( data ) {
-            renderQueue(data);
+    function getPosition() {
+        $.get("GetPosition.php", function( data ) {
+            renderPosition(data);
         })
     }
 
-    function renderQueue(Queue) {
-        console.log(Queue);
+    function renderPosition(position) {
+        if(position >= 0){
+            if(position == 0){
+                position = 'Din tur!';
+            }
+            $('#position').html(position);
+            $('#signup').hide();
+            $('#queue').show();
+        }else{
+            $('#signup').show();
+            $('#queue').hide();
+        }
     }
-
-
-    getQueue();
+    getPosition();
+    setInterval(getPosition, 1000)
 
 </script>
 

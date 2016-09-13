@@ -5,26 +5,27 @@
  * Date: 12.09.2016
  * Time: 17.36
  */
+$TESTING = false;
+session_start();
 
-
-
-
-namespace LabQueue;
-
-include "Queue.php";
-include "Person.php";
-
-use LabQueue\Person;
-use LabQueue\Queue;
-
-if (!file_exists("Queue.txt")) {
-    $queue = new Queue();
-} else {
-    $file_contents = file_get_contents("Queue.txt");
-    $queue = unserialize($file_contents);
+if($TESTING){
+    // Need to generate random id if you want to add multiple users to queue from same session
+    $id = md5(rand());
+}else{
+    $id = session_id();
 }
 
-$user = new Person($_POST["name"]);
-$queue->addPerson($user);
-$queue->setCurrentUser($user);
-file_put_contents("Queue.txt", serialize($queue));
+$name = $_POST["name"];
+if(isset($name) && strlen($name) > 0){
+    if (!file_exists("Queue.txt")) {
+        $queue = array();
+    } else {
+        $file_contents = file_get_contents("Queue.txt");
+        $queue = unserialize($file_contents);
+    }
+
+    if(!key_exists($id, $queue)){
+        $queue[$id] = $name;
+        file_put_contents("Queue.txt", serialize($queue));
+    }
+}

@@ -11,4 +11,5 @@ $id = session_id();
 
 $file_content = file_get_contents("Queue.txt");
 $queue = unserialize($file_content);
-echo json_encode(array_values($queue));
+array_shift($queue);
+file_put_contents("Queue.txt", serialize($queue));

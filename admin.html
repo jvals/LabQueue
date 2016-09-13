@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<ol id="queue"></ol>
+<button id="next">Neste</button>
+
+<script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous">
+</script>
+
+<script>
+    function getQueue() {
+        $.get("GetQueue.php", function( data ) {
+            renderQueue(JSON.parse(data));
+        })
+    }
+
+    getQueue();
+    setInterval(getQueue, 1000);
+
+    function renderQueue(queue){
+        queueEl = $('#queue');
+        queueEl.empty();
+        for( i = 0; i < queue.length; i++){
+            person = queue[i];
+            queueEl.append('<li>'+person+'</li>');
+        }
+    }
+    $('#next').click(function(){
+        $.post( "RemoveNext.php", function( data ) {
+            console.log(data)
+        });
+    })
+</script>
+</body>
+</html>

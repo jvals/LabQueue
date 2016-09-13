@@ -11,4 +11,5 @@ $id = session_id();
 
 $file_content = file_get_contents("Queue.txt");
 $queue = unserialize($file_content);
-echo json_encode(array_values($queue));
+$position = array_search($id, array_keys($queue));
+echo json_encode($position);
